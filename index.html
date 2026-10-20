@@ -152,179 +152,222 @@ footer{background:#083f31;color:white;padding:24px 16px;text-align:center;font-s
 <a class="float-wa" href="https://wa.me/919675799812" target="_blank" rel="noopener">✆ WhatsApp</a>
 
 <script>
+     
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDFutlLqZisIJ8D_vHlG79ZmTdBQvebAIU",
+  authDomain: "om-medical-9dd13.firebaseapp.com",
+  projectId: "om-medical-9dd13",
+  storageBucket: "om-medical-9dd13.firebasestorage.app",
+  messagingSenderId: "568880202832",
+  appId: "1:568880202832:web:71dd4efa35c4085210fd55",
+  measurementId: "G-148B6NHNT8"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/*
-  अपनी दुकान की वास्तविक कीमतें भरें:
-  price: null = कीमत तय नहीं है, कार्ट में नहीं जुड़ सकता।
-  केवल पुष्टि की हुई कीमत रुपये में लिखें, जैसे price: 35.
-  नीचे की फोटो placeholder हैं; इन्हें अपनी उत्पाद फोटो से बदला जा सकता है।
-*/
-const products = [
-  {id:1,name:"Adhesive Bandage",category:"firstaid",label:"First Aid",description:"बैंडेज पैक",price:10,image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Bandage"},
-  {id:2,name:"Sterile Gauze",category:"firstaid",label:"First Aid",description:"गॉज ड्रेसिंग पैक",price:null,image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Gauze"},
-  {id:3,name:"Digital Thermometer",category:"health",label:"Health Essentials",description:"डिजिटल थर्मामीटर",price:null,image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Thermometer"},
-  {id:4,name:"Face Mask",category:"health",label:"Health Essentials",description:"मास्क पैक",price:null,image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Face+Mask"},
-  {id:5,name:"Baby Wipes",category:"baby",label:"Baby Care",description:"बेबी वाइप्स पैक",price:null,image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Baby+Wipes"},
-  {id:6,name:"Baby Diapers",category:"baby",label:"Baby Care",description:"डायपर पैक — साइज़ पूछें",price:null,image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Baby+Diapers"},
-  {id:7,name:"ORS Sachets",category:"medicine",label:"Medicines",description:"ब्रांड और पैक की पुष्टि करें",price:null,image:"https://placehold.co/600x400/e9f8f1/087f5b?text=ORS"},
-  {id:8,name:"Paracetamol",category:"medicine",label:"Medicines",description:"स्ट्रेंथ और पैक की पुष्टि करें",price:null,image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Paracetamol"}
-];
-
+let products = [];
 let cart = [];
 
 const grid = document.getElementById("productGrid");
 const search = document.getElementById("search");
 const category = document.getElementById("category");
+const cartItems = document.getElementById("cartItems");
 
-function money(value){
+function money(value) {
   return "₹" + Number(value).toFixed(2);
 }
 
-function renderProducts(){
+function safeText(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;",
+    '"': "&quot;", "'": "&#39;"
+  })[c]);
+}
+
+function safeImage(value) {
+  try {
+    const u = new URL(String(value || ""));
+    if (u.protocol === "https:" || u.protocol === "http:") return u.href;
+  } catch (_) {}
+  return "https://placehold.co/600x400?text=Product";
+}
+
+async function loadProducts() {
+  grid.innerHTML = '<div class="empty">प्रोडक्ट लोड हो रहे हैं...</div>';
+
+  try {
+    const snap = await getDocs(collection(db, "medicines"));
+
+    products = snap.docs.map(doc => {
+      const d = doc.data();
+      return {
+        id: doc.id,
+        name: String(d.name || "Product"),
+        category: ["firstaid", "baby", "health", "medicine"].includes(d.category)
+          ? d.category : "medicine",
+        label: String(d.label || "Medicines"),
+        description: String(d.description || "दुकान से जानकारी लें"),
+        price: typeof d.price === "number" && Number.isFinite(d.price) && d.price >= 0
+          ? d.price : null,
+        image: safeImage(d.image)
+      };
+    });
+
+    renderProducts();
+  } catch (e) {
+    console.error(e);
+    grid.innerHTML =
+      '<div class="empty">डेटा लोड नहीं हुआ। Firestore Rules और इंटरनेट जाँचें।</div>';
+  }
+}
+
+function renderProducts() {
   const term = search.value.trim().toLowerCase();
   const selected = category.value;
 
   const filtered = products.filter(p =>
     (selected === "all" || p.category === selected) &&
-    (p.name.toLowerCase().includes(term) ||
-     p.description.toLowerCase().includes(term) ||
-     p.label.toLowerCase().includes(term))
+    [p.name, p.description, p.label].some(s => s.toLowerCase().includes(term))
   );
 
-  if(!filtered.length){
+  if (!filtered.length) {
     grid.innerHTML = '<div class="empty">कोई प्रोडक्ट नहीं मिला।</div>';
     return;
   }
 
-  grid.innerHTML = filtered.map(p => {
-    const unavailable = p.price === null || !Number.isFinite(Number(p.price)) || Number(p.price) < 0;
-    const button = unavailable
-      ? '<button class="btn unavailable" type="button" disabled>कीमत पूछें</button>'
-      : '<button class="btn" type="button" data-add="' + p.id + '">+ Add to Cart</button>';
-
-    return `
-      <article class="card">
-        <img class="photo" src="${p.image}" alt="${p.name}" loading="lazy"
-          onerror="this.onerror=null;this.src='https://placehold.co/600x400/e9f8f1/087f5b?text=Product'">
-        <div class="card-body">
-          <span class="label">${p.label}</span>
-          <h3>${p.name}</h3>
-          <p class="desc">${p.description}</p>
-          <div class="price">${unavailable ? "कीमत पूछें" : money(p.price)}</div>
-          ${button}
-        </div>
-      </article>`;
-  }).join("");
+  grid.innerHTML = filtered.map(p => `
+    <article class="card">
+      <img class="photo" src="${safeText(p.image)}"
+        alt="${safeText(p.name)}" loading="lazy">
+      <div class="card-body">
+        <span class="label">${safeText(p.label)}</span>
+        <h3>${safeText(p.name)}</h3>
+        <p class="desc">${safeText(p.description)}</p>
+        <div class="price">${p.price === null ? "कीमत पूछें" : money(p.price)}</div>
+        ${p.price === null
+          ? '<button class="btn unavailable" disabled>कीमत पूछें</button>'
+          : `<button class="btn" data-add="${safeText(p.id)}">+ Add to Cart</button>`}
+      </div>
+    </article>
+  `).join("");
 }
 
-function renderCart(){
-  const container = document.getElementById("cartItems");
-  const count = cart.reduce((sum,item) => sum + item.qty, 0);
-  const total = cart.reduce((sum,item) => {
-    const p = products.find(product => product.id === item.id);
-    return sum + (p ? Number(p.price) * item.qty : 0);
+function renderCart() {
+  document.getElementById("cartCount").textContent =
+    cart.reduce((s, i) => s + i.qty, 0);
+
+  const total = cart.reduce((s, i) => {
+    const p = products.find(p => p.id === i.id);
+    return s + (p ? p.price * i.qty : 0);
   }, 0);
 
-  document.getElementById("cartCount").textContent = count;
   document.getElementById("cartTotal").textContent = money(total);
 
-  if(cart.length === 0){
-    container.innerHTML = '<div class="cart-empty">आपका कार्ट खाली है। पहले कोई प्रोडक्ट जोड़ें।</div>';
+  if (!cart.length) {
+    cartItems.innerHTML =
+      '<div class="cart-empty">आपका कार्ट खाली है।</div>';
     return;
   }
 
-  container.innerHTML = cart.map(item => {
-    const p = products.find(product => product.id === item.id);
-    if(!p) return "";
+  cartItems.innerHTML = cart.map(i => {
+    const p = products.find(p => p.id === i.id);
+    if (!p) return "";
+
     return `
       <div class="cart-row">
-        <div class="cart-name">${p.name}</div>
-        <div class="cart-price">${money(p.price)} × ${item.qty} = ${money(Number(p.price)*item.qty)}</div>
+        <div class="cart-name">${safeText(p.name)}</div>
+        <div class="cart-price">${money(p.price)} × ${i.qty} = ${money(p.price * i.qty)}</div>
         <div class="qty">
-          <button type="button" data-minus="${p.id}" aria-label="मात्रा घटाएँ">−</button>
-          <strong>${item.qty}</strong>
-          <button type="button" data-plus="${p.id}" aria-label="मात्रा बढ़ाएँ">+</button>
-          <button type="button" class="remove" data-remove="${p.id}">हटाएँ</button>
+          <button data-minus="${safeText(i.id)}">−</button>
+          <strong>${i.qty}</strong>
+          <button data-plus="${safeText(i.id)}">+</button>
+          <button class="remove" data-remove="${safeText(i.id)}">हटाएँ</button>
         </div>
       </div>`;
   }).join("");
 }
 
-function addToCart(id){
-  const p = products.find(product => product.id === id);
-  if(!p || p.price === null || !Number.isFinite(Number(p.price)) || Number(p.price) < 0){
-    alert("इस प्रोडक्ट की कीमत अभी तय नहीं है। कृपया दुकान से पूछें।");
-    return;
-  }
-  const existing = cart.find(item => item.id === id);
-  if(existing) existing.qty++;
-  else cart.push({id:id,qty:1});
-  renderCart();
-}
+grid.addEventListener("click", e => {
+  const b = e.target.closest("[data-add]");
+  if (!b) return;
 
-grid.addEventListener("click",event => {
-  const button = event.target.closest("[data-add]");
-  if(button) addToCart(Number(button.dataset.add));
+  const p = products.find(p => p.id === b.dataset.add);
+  if (!p || p.price === null) return;
+
+  const item = cart.find(i => i.id === p.id);
+  if (item) item.qty++;
+  else cart.push({ id: p.id, qty: 1 });
+
+  renderCart();
 });
 
-document.getElementById("cartItems").addEventListener("click",event => {
-  const target = event.target;
-  const plusId = target.dataset.plus;
-  const minusId = target.dataset.minus;
-  const removeId = target.dataset.remove;
+cartItems.addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
 
-  if(plusId){
-    const item = cart.find(i => i.id === Number(plusId));
-    if(item) item.qty++;
-  } else if(minusId){
-    const item = cart.find(i => i.id === Number(minusId));
-    if(item) item.qty--;
+  const id = b.dataset.plus || b.dataset.minus || b.dataset.remove;
+  if (!id) return;
+
+  if (b.dataset.remove !== undefined) {
+    cart = cart.filter(i => i.id !== id);
+  } else if (b.dataset.plus !== undefined) {
+    const i = cart.find(i => i.id === id);
+    if (i) i.qty++;
+  } else {
+    const i = cart.find(i => i.id === id);
+    if (i) i.qty--;
     cart = cart.filter(i => i.qty > 0);
-  } else if(removeId){
-    cart = cart.filter(i => i.id !== Number(removeId));
   }
+
   renderCart();
 });
 
-search.addEventListener("input",renderProducts);
-category.addEventListener("change",renderProducts);
+search.addEventListener("input", renderProducts);
+category.addEventListener("change", renderProducts);
 
-document.getElementById("clearCart").addEventListener("click",() => {
+document.getElementById("clearCart").addEventListener("click", () => {
   cart = [];
   renderCart();
 });
 
-document.getElementById("checkout").addEventListener("click",() => {
-  if(cart.length === 0){
-    alert("कृपया पहले कार्ट में प्रोडक्ट जोड़ें।");
+document.getElementById("checkout").addEventListener("click", () => {
+  if (!cart.length) {
+    alert("पहले कार्ट में प्रोडक्ट जोड़ें।");
     return;
   }
 
-  let message = "Namaste OM MEDICAL STORE!%0A%0AMera order:%0A";
+  let msg = "Namaste OM MEDICAL STORE!\n\nMera order:\n";
   let total = 0;
 
-  cart.forEach((item,index) => {
-    const p = products.find(product => product.id === item.id);
-    if(!p) return;
-    const lineTotal = Number(p.price) * item.qty;
-    total += lineTotal;
-    message += (index+1) + ". " + p.name +
-      " | Qty: " + item.qty +
-      " | Price: " + money(p.price) +
-      " | Subtotal: " + money(lineTotal) + "%0A";
+  cart.forEach((i, n) => {
+    const p = products.find(p => p.id === i.id);
+    if (!p) return;
+    const sub = p.price * i.qty;
+    total += sub;
+    msg += `${n + 1}. ${p.name} | Qty: ${i.qty} | Price: ${money(p.price)} | Subtotal: ${money(sub)}\n`;
   });
 
-  message += "%0AEstimated product total: " + money(total);
-  message += "%0ADelivery charges and stock to be confirmed.";
-  message += "%0APlease confirm this order.";
+  msg += `\nEstimated total: ${money(total)}\nDelivery and stock to be confirmed.`;
 
-  const url = "https://wa.me/919675799812?text=" + message;
-  window.open(url,"_blank","noopener");
+  window.location.href =
+    "https://wa.me/919675799812?text=" + encodeURIComponent(msg);
 });
 
-renderProducts();
 renderCart();
+loadProducts();
+</script>
+ 
 </script>
 </body>
 </html>
