@@ -1,164 +1,253 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="OM MEDICAL STORE, Rudrapur — medicines, first aid, baby care and healthcare essentials. Contact us for availability.">
-  <title>OM MEDICAL STORE | आपकी सेहत, हमारी प्राथमिकता</title>
-  <style>
-    :root{--green:#087f5b;--green2:#0b9b6b;--mint:#e9f8f1;--ink:#18312a;--muted:#5d7069;--white:#fff;--line:#dcebe4;--orange:#f59e0b}
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;color:var(--ink);background:#fbfefc;line-height:1.6}
-    a{color:inherit;text-decoration:none}
-    .topbar{background:#075d45;color:white;text-align:center;padding:8px 14px;font-size:13px}
-    header{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
-    .nav{max-width:1120px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--green);font-size:18px}
-    .logo{width:44px;height:44px;border-radius:14px;background:var(--green);color:white;display:grid;place-items:center;font-size:24px;font-weight:800}
-    nav{display:flex;gap:20px;align-items:center;font-size:14px;font-weight:700}
-    nav a:hover{color:var(--green2)}
-    .btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:12px;padding:12px 17px;font-weight:700;cursor:pointer;font-size:14px;gap:8px}
-    .btn-primary{background:var(--green);color:white}.btn-primary:hover{background:#06684b}
-    .btn-light{background:white;border:1px solid var(--line);color:var(--green)}
-    .hero{background:linear-gradient(125deg,#eaf9f1 0%,#f7fcf9 62%,#d7f2e4 100%);overflow:hidden}
-    .hero-inner{max-width:1120px;margin:auto;padding:70px 20px 64px;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:38px}
-    .eyebrow{color:var(--green);font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-    h1{font-size:clamp(34px,5vw,57px);line-height:1.12;margin:12px 0 18px;letter-spacing:-1.3px}
-    h1 span{color:var(--green)}
-    .lead{font-size:17px;color:var(--muted);max-width:570px}
-    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
-    .hero-card{background:white;border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:0 20px 50px #0b684414}
-    .cross{width:94px;height:94px;background:var(--mint);color:var(--green);border-radius:26px;display:grid;place-items:center;font-size:60px;font-weight:700;margin:0 auto 15px}
-    .hero-card h2{text-align:center;margin:0 0 6px;font-size:24px}.hero-card p{text-align:center;color:var(--muted);margin:0}
-    .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
-    .trust div{background:#f6fbf8;border-radius:14px;padding:13px 8px;text-align:center;font-size:12px;font-weight:700}
-    .trust b{display:block;font-size:22px;color:var(--green)}
-    section{padding:62px 20px}.container{max-width:1120px;margin:auto}
-    .section-head{text-align:center;max-width:680px;margin:0 auto 30px}
-    .section-head h2{font-size:clamp(26px,3vw,36px);margin:8px 0}.section-head p{color:var(--muted);margin:0}
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    .product{background:white;border:1px solid var(--line);border-radius:18px;padding:22px;transition:transform .2s,box-shadow .2s}
-    .product:hover{transform:translateY(-3px);box-shadow:0 12px 28px #0b684410}
-    .product-icon{width:54px;height:54px;border-radius:16px;background:var(--mint);display:grid;place-items:center;font-size:27px;margin-bottom:14px}
-    .product h3{margin:0 0 7px;font-size:17px}.product p{margin:0;color:var(--muted);font-size:14px}
-    .note{font-size:12px;color:var(--muted);margin-top:20px;text-align:center}
-    .services{background:#f1faf5}
-    .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .service{background:white;border:1px solid var(--line);padding:24px;border-radius:18px}
-    .service .emoji{font-size:28px}.service h3{margin:10px 0 5px}.service p{color:var(--muted);margin:0;font-size:14px}
-    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
-    .contact-card{padding:28px;border:1px solid var(--line);border-radius:22px;background:white}
-    .contact-card h3{margin-top:0;font-size:22px}
-    .contact-item{display:flex;gap:12px;margin:18px 0;align-items:flex-start}
-    .contact-item .symbol{background:var(--mint);color:var(--green);width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;font-size:19px}
-    .contact-item small{display:block;color:var(--muted);font-size:12px}.contact-item strong{font-size:15px}
-    .map-placeholder{border-radius:22px;background:linear-gradient(145deg,#e5f5eb,#f7fcf9);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;min-height:300px}
-    .map-placeholder .pin{font-size:42px}.map-placeholder p{color:var(--muted);max-width:330px}
-    .cta{background:var(--green);color:white;border-radius:24px;padding:35px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .cta h2{margin:0 0 7px;font-size:clamp(23px,3vw,32px)}.cta p{margin:0;color:#d6f4e6}
-    .cta .btn{background:white;color:var(--green);white-space:nowrap}
-    footer{background:#083f31;color:#e1f5eb;padding:28px 20px}
-    .footer-inner{max-width:1120px;margin:auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:13px}
-    .disclaimer{font-size:11px;color:#b7d7ca;max-width:760px;margin-top:12px}
-    .float-wa{position:fixed;right:18px;bottom:18px;background:#20b75a;color:white;border-radius:50px;padding:14px 18px;font-weight:800;box-shadow:0 8px 24px #0002;z-index:20}
-    @media(max-width:800px){nav{display:none}.hero-inner{grid-template-columns:1fr;padding-top:48px}.hero-card{max-width:460px;width:100%;margin:auto}.grid{grid-template-columns:repeat(2,1fr)}.service-grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}.cta{align-items:flex-start;flex-direction:column}}
-    @media(max-width:420px){.grid{grid-template-columns:1fr}.brand{font-size:15px}.nav{padding:12px}.hero-inner{padding-left:18px;padding-right:18px}section{padding:48px 16px}.trust{gap:6px}.trust div{font-size:11px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="OM MEDICAL STORE Rudrapur. Healthcare products, medicine availability and WhatsApp orders.">
+<title>OM MEDICAL STORE | Rudrapur</title>
+<style>
+:root{--green:#087f5b;--light:#e9f8f1;--ink:#18312a;--muted:#62736c;--line:#dcebe4}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#fbfefc;color:var(--ink);line-height:1.6}
+a{text-decoration:none;color:inherit}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.nav{max-width:1100px;margin:auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:17px;font-weight:800;color:var(--green)}
+.logo{display:inline-grid;place-items:center;background:var(--green);color:white;border-radius:10px;width:40px;height:40px;margin-right:8px}
+.btn{display:inline-block;padding:10px 15px;border-radius:10px;background:var(--green);color:white;font-weight:bold;border:0;cursor:pointer}
+.btn-light{background:white;color:var(--green);border:1px solid var(--line)}
+.hero{padding:42px 18px;background:linear-gradient(120deg,#e6f8ee,#f9fdfb);text-align:center}
+.hero h1{font-size:clamp(30px,6vw,48px);line-height:1.2;margin:10px 0}
+.hero p{max-width:650px;margin:12px auto;color:var(--muted)}
+.wrap{max-width:1100px;margin:auto;padding:35px 16px}
+.heading{text-align:center;margin-bottom:22px}
+.heading h2{margin:0 0 6px;font-size:28px}
+.heading p{color:var(--muted);margin:0}
+.searchbar{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+input,select{padding:12px;border:1px solid #cbded4;border-radius:10px;background:white;font-size:15px;min-width:0}
+#search{flex:1;min-width:180px}
+#category{width:100%;max-width:230px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{background:white;border:1px solid var(--line);border-radius:17px;overflow:hidden;display:flex;flex-direction:column}
+.photo{height:170px;width:100%;object-fit:contain;background:#f3faf6;padding:10px}
+.card-body{padding:16px;display:flex;flex-direction:column;flex:1}
+.card h3{font-size:18px;margin:0 0 5px}
+.category-label{font-size:12px;color:var(--green);font-weight:bold}
+.desc{font-size:13px;color:var(--muted);margin:8px 0}
+.price{font-weight:800;font-size:17px;margin:7px 0 12px}
+.card .btn{width:100%;text-align:center;margin-top:auto}
+.note{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
+.services{background:#f0faf5}
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.service{background:white;padding:20px;border:1px solid var(--line);border-radius:15px}
+.contact{background:#fff;border:1px solid var(--line);padding:22px;border-radius:16px}
+footer{background:#083f31;color:white;padding:24px 16px;text-align:center;font-size:13px}
+.float-wa{position:fixed;right:14px;bottom:14px;background:#20b75a;color:white;padding:13px 17px;border-radius:40px;font-weight:bold;z-index:8;box-shadow:0 5px 18px #0002}
+.empty{grid-column:1/-1;text-align:center;padding:25px;color:var(--muted)}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.service-grid{grid-template-columns:1fr}.photo{height:145px}}
+@media(max-width:440px){.grid{grid-template-columns:1fr}.photo{height:190px}.brand{font-size:14px}.hero{padding:32px 15px}}
+</style>
 </head>
 <body>
-  <div class="topbar">आपकी सेहत, हमारी प्राथमिकता • दवाइयों की उपलब्धता के लिए संपर्क करें</div>
-  <header>
-    <div class="nav">
-      <a class="brand" href="#home"><span class="logo">Rx</span><span>OM MEDICAL STORE<small style="display:block;font-size:10px;color:#5d7069;font-weight:600">आपकी सेहत, हमारी प्राथमिकता</small></span></a>
-      <nav><a href="#home">Home</a><a href="#products">Products</a><a href="#services">Services</a><a href="#contact">Contact</a></nav>
-      <a class="btn btn-primary" href="#contact">संपर्क करें</a>
-    </div>
-  </header>
 
-  <main>
-    <section class="hero" id="home" style="padding-top:0;padding-bottom:0">
-      <div class="hero-inner">
-        <div>
-          <div class="eyebrow">आपका भरोसेमंद मेडिकल स्टोर</div>
-          <h1>स्वास्थ्य की देखभाल,<br><span>भरोसे के साथ।</span></h1>
-          <p class="lead">OM MEDICAL STORE में दवाइयों की उपलब्धता, फर्स्ट एड, बेबी केयर और रोज़मर्रा के हेल्थकेयर प्रोडक्ट्स के बारे में जानकारी प्राप्त करें।</p>
-          <div class="actions">
-            <a class="btn btn-primary" href="https://wa.me/919675799812?text=Namaste%2C%20mujhe%20medicine%20availability%20ke%20baare%20mein%20poochna%20hai." target="_blank" rel="noopener">☏ WhatsApp Order</a>
-            <a class="btn btn-light" href="tel:+919675799812">☎ Call Now</a>
-          </div>
+<header>
+  <div class="nav">
+    <a class="brand" href="#home"><span class="logo">Rx</span>OM MEDICAL STORE</a>
+    <a class="btn" href="#products">Products</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="heading">
+    <div style="color:#087f5b;font-weight:bold">आपका भरोसेमंद मेडिकल स्टोर</div>
+    <h1>OM MEDICAL STORE</h1>
+    <h2>आपकी सेहत, हमारी प्राथमिकता</h2>
+    <p>Ashok Vihar Colony, Teen Pani Dam Road, Rudrapur, Uttarakhand</p>
+    <a class="btn" href="https://wa.me/919675799812?text=Namaste%2C%20mujhe%20healthcare%20products%20ki%20jaankari%20chahiye." target="_blank" rel="noopener">WhatsApp पर पूछें</a>
+    <a class="btn btn-light" href="tel:+919675799812">Call Now</a>
+  </div>
+</section>
+
+<section class="wrap" id="products">
+  <div class="heading">
+    <h2>हमारे प्रोडक्ट्स</h2>
+    <p>प्रोडक्ट की कीमत और उपलब्धता की पुष्टि WhatsApp पर करें।</p>
+  </div>
+
+  <div class="searchbar">
+    <input id="search" type="search" placeholder="प्रोडक्ट का नाम खोजें..." aria-label="प्रोडक्ट खोजें">
+    <select id="category" aria-label="कैटेगरी चुनें">
+      <option value="all">सभी कैटेगरी</option>
+      <option value="firstaid">First Aid</option>
+      <option value="baby">Baby Care</option>
+      <option value="health">Health Essentials</option>
+      <option value="medicine">Medicines</option>
+    </select>
+  </div>
+
+  <div class="grid" id="productGrid"></div>
+
+  <p class="note">फोटो उदाहरण के लिए हैं। वास्तविक ब्रांड, पैक साइज़, MRP, स्टॉक और कीमत दुकान से पुष्टि करें। प्रिस्क्रिप्शन वाली दवाएँ वैध प्रिस्क्रिप्शन और लागू कानूनों के अनुसार ही उपलब्ध होंगी।</p>
+</section>
+
+<section class="wrap services" id="services">
+  <div class="heading">
+    <h2>हमारी सेवाएँ</h2>
+    <p>संपर्क करें और उत्पाद की उपलब्धता पूछें।</p>
+  </div>
+  <div class="service-grid">
+    <div class="service"><h3>💬 WhatsApp Order</h3><p>प्रोडक्ट चुनकर WhatsApp पर पूछताछ भेजें।</p></div>
+    <div class="service"><h3>🚚 Home Delivery</h3><p>होम डिलीवरी क्षेत्र, शुल्क और समय पहले कन्फर्म करें।</p></div>
+    <div class="service"><h3>📍 Google Maps</h3><p>हमारी दुकान तक पहुँचने के लिए रास्ता देखें।<br><br><a class="btn" href="https://www.google.com/maps/search/?api=1&query=OM%20MEDICAL%20STORE%20Ashok%20Vihar%20Colony%20Teen%20Pani%20Dam%20Road%20Rudrapur" target="_blank" rel="noopener">रास्ता देखें</a></p></div>
+  </div>
+</section>
+
+<section class="wrap" id="contact">
+  <div class="contact">
+    <h2>संपर्क करें</h2>
+    <p><strong>OM MEDICAL STORE</strong></p>
+    <p>पता: Ashok Vihar Colony, Teen Pani Dam Road, Rudrapur, Uttarakhand</p>
+    <p>फोन: <a href="tel:+919675799812">9675799812</a></p>
+    <a class="btn" href="https://wa.me/919675799812?text=Namaste%2C%20OM%20MEDICAL%20STORE%20se%20sampark%20karna%20hai." target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <strong>OM MEDICAL STORE</strong>
+  <p>आपकी सेहत, हमारी प्राथमिकता</p>
+  <p>यह वेबसाइट सामान्य जानकारी के लिए है, चिकित्सकीय सलाह का विकल्प नहीं। उत्पाद की उपलब्धता और कीमत दुकान से पुष्टि करें।</p>
+  <p>© <span id="year"></span> OM MEDICAL STORE</p>
+</footer>
+
+<a class="float-wa" href="https://wa.me/919675799812?text=Namaste%2C%20OM%20MEDICAL%20STORE%20se%20sampark%20karna%20hai." target="_blank" rel="noopener">✆ WhatsApp</a>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/*
+  यहां products की सूची बदल सकते हैं।
+  price: null रखने पर "कीमत पूछें" दिखेगा।
+  असली कीमत, ब्रांड और स्टॉक की पुष्टि करके ही अपडेट करें।
+*/
+const products = [
+  {
+    name:"Adhesive Bandage",
+    category:"firstaid",
+    label:"First Aid",
+    description:"छोटे कट और खरोंच के लिए बैंडेज",
+    price:null,
+    image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Adhesive+Bandage"
+  },
+  {
+    name:"Sterile Gauze",
+    category:"firstaid",
+    label:"First Aid",
+    description:"गॉज ड्रेसिंग उत्पाद; पैक की जानकारी पूछें",
+    price:null,
+    image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Sterile+Gauze"
+  },
+  {
+    name:"Digital Thermometer",
+    category:"health",
+    label:"Health Essentials",
+    description:"तापमान मापने का डिजिटल थर्मामीटर",
+    price:null,
+    image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Digital+Thermometer"
+  },
+  {
+    name:"Adult Face Mask",
+    category:"health",
+    label:"Health Essentials",
+    description:"मास्क की उपलब्धता और पैक साइज़ पूछें",
+    price:null,
+    image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Face+Mask"
+  },
+  {
+    name:"Baby Wipes",
+    category:"baby",
+    label:"Baby Care",
+    description:"ब्रांड और पैक साइज़ दुकान से कन्फर्म करें",
+    price:null,
+    image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Baby+Wipes"
+  },
+  {
+    name:"Baby Diapers",
+    category:"baby",
+    label:"Baby Care",
+    description:"साइज़ और पैक की उपलब्धता पूछें",
+    price:null,
+    image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Baby+Diapers"
+  },
+  {
+    name:"ORS Sachets",
+    category:"medicine",
+    label:"Medicines",
+    description:"उत्पाद, पैक और उपयोग के लिए फार्मासिस्ट से पूछें",
+    price:null,
+    image:"https://placehold.co/600x400/e9f8f1/087f5b?text=ORS+Sachets"
+  },
+  {
+    name:"Paracetamol",
+    category:"medicine",
+    label:"Medicines",
+    description:"ब्रांड, स्ट्रेंथ और पैक की उपलब्धता पूछें",
+    price:null,
+    image:"https://placehold.co/600x400/e9f8f1/087f5b?text=Paracetamol"
+  }
+];
+
+const grid = document.getElementById("productGrid");
+const search = document.getElementById("search");
+const category = document.getElementById("category");
+
+function renderProducts(){
+  const term = search.value.trim().toLowerCase();
+  const selected = category.value;
+
+  const filtered = products.filter(p =>
+    (selected === "all" || p.category === selected) &&
+    (p.name.toLowerCase().includes(term) ||
+     p.description.toLowerCase().includes(term) ||
+     p.label.toLowerCase().includes(term))
+  );
+
+  if(!filtered.length){
+    grid.innerHTML = '<div class="empty">कोई प्रोडक्ट नहीं मिला। दूसरा नाम खोजें।</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => {
+    const priceText = p.price == null ? "कीमत पूछें" : "₹" + Number(p.price).toFixed(2);
+    const message = "Namaste, OM MEDICAL STORE. Mujhe is product ke baare mein jaankari chahiye: " +
+      p.name + ". Kripya price aur availability confirm karein.";
+    const wa = "https://wa.me/919675799812?text=" + encodeURIComponent(message);
+
+    return `
+      <article class="card">
+        <img class="photo"
+          src="${p.image}"
+          alt="${p.name}"
+          loading="lazy"
+          onerror="this.onerror=null;this.src='https://placehold.co/600x400/e9f8f1/087f5b?text=Product+Photo'">
+        <div class="card-body">
+          <span class="category-label">${p.label}</span>
+          <h3>${p.name}</h3>
+          <p class="desc">${p.description}</p>
+          <div class="price">${priceText}</div>
+          <a class="btn" href="${wa}" target="_blank" rel="noopener">WhatsApp Order / पूछें</a>
         </div>
-        <div class="hero-card">
-          <div class="cross">+</div>
-          <h2>OM MEDICAL STORE</h2>
-          <p>आपकी सेहत, हमारी प्राथमिकता</p>
-          <div class="trust">
-            <div><b>Rx</b>दवा संबंधी सहायता</div>
-            <div><b>♥</b>हेल्थकेयर ज़रूरतें</div>
-            <div><b>✓</b>जिम्मेदार सेवा</div>
-          </div>
-        </div>
-      </div>
-    </section>
+      </article>`;
+  }).join("");
+}
 
-    <section id="products">
-      <div class="container">
-        <div class="section-head"><div class="eyebrow">हमारे प्रोडक्ट्स</div><h2>आपकी रोज़मर्रा की हेल्थकेयर ज़रूरतें</h2><p>उत्पाद की उपलब्धता, सही कीमत और आवश्यक प्रिस्क्रिप्शन की पुष्टि के लिए दुकान से संपर्क करें।</p></div>
-        <div class="grid">
-          <article class="product"><div class="product-icon">💊</div><h3>Medicines</h3><p>ब्रांडेड और जेनेरिक दवाइयों की उपलब्धता के लिए पूछें।</p></article>
-          <article class="product"><div class="product-icon">🩹</div><h3>First Aid</h3><p>पट्टी, बैंडेज और प्राथमिक उपचार से जुड़े उत्पाद।</p></article>
-          <article class="product"><div class="product-icon">🍼</div><h3>Baby Care</h3><p>बेबी केयर और रोज़मर्रा की देखभाल के उत्पाद।</p></article>
-          <article class="product"><div class="product-icon">🩺</div><h3>Health Essentials</h3><p>चुनिंदा हेल्थकेयर उपकरण और दैनिक उपयोग की चीज़ें।</p></article>
-        </div>
-        <p class="note">यह उत्पाद श्रेणियों की जानकारी है, लाइव स्टॉक सूची नहीं। दवा की उपलब्धता दुकान से पुष्टि करें।</p>
-      </div>
-    </section>
-
-    <section class="services" id="services">
-      <div class="container">
-        <div class="section-head"><div class="eyebrow">हमारी सेवाएँ</div><h2>आसान संपर्क, बेहतर सुविधा</h2><p>अपनी आवश्यकता के अनुसार हमारी टीम से संपर्क करें।</p></div>
-        <div class="service-grid">
-          <article class="service"><div class="emoji">💬</div><h3>WhatsApp पर पूछताछ</h3><p>दवा की उपलब्धता और ऑर्डर संबंधी जानकारी के लिए संदेश भेजें।</p></article>
-          <article class="service"><div class="emoji">🚚</div><h3>Home Delivery</h3><p>होम डिलीवरी की उपलब्धता, क्षेत्र, शुल्क और समय दुकान से पहले कन्फर्म करें।</p></article>
-          <article class="service"><div class="emoji">📍</div><h3>दुकान तक पहुँचें</h3><p>Google Maps के माध्यम से लोकेशन और रास्ता देखें।</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="section-head"><div class="eyebrow">हमसे संपर्क करें</div><h2>OM MEDICAL STORE</h2><p>दवा की उपलब्धता और दुकान के समय की पुष्टि के लिए संपर्क करें।</p></div>
-        <div class="contact-grid">
-          <div class="contact-card">
-            <h3>संपर्क विवरण</h3>
-            <div class="contact-item"><div class="symbol">📍</div><div><small>दुकान का पता</small><strong>Ashok Vihar Colony, Teen Pani Dam Road, Rudrapur, Uttarakhand</strong></div></div>
-            <div class="contact-item"><div class="symbol">☎</div><div><small>फोन नंबर</small><strong>9675799812</strong></div></div>
-            <div class="contact-item"><div class="symbol">🕒</div><div><small>दुकान का समय</small><strong>कृपया फोन करके पुष्टि करें</strong></div></div>
-            <div class="actions">
-              <a class="btn btn-primary" href="tel:+919675799812">Call Now</a>
-              <a class="btn btn-light" href="https://wa.me/919675799812?text=Namaste%2C%20OM%20MEDICAL%20STORE%20se%20sampark%20karna%20hai." target="_blank" rel="noopener">WhatsApp</a>
-            </div>
-          </div>
-          <div class="map-placeholder">
-            <div class="pin">📍</div><h3>हमारी लोकेशन</h3>
-            <p>Ashok Vihar Colony, Teen Pani Dam Road, Rudrapur</p>
-            <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=OM%20MEDICAL%20STORE%20Ashok%20Vihar%20Colony%20Teen%20Pani%20Dam%20Road%20Rudrapur" target="_blank" rel="noopener">Google Maps पर रास्ता देखें ↗</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section style="padding-top:0">
-      <div class="container">
-        <div class="cta"><div><h2>दवा की उपलब्धता पूछनी है?</h2><p>हमें WhatsApp संदेश भेजें या सीधे कॉल करें।</p></div><a class="btn" href="https://wa.me/919675799812?text=Namaste%2C%20mujhe%20medicine%20availability%20ke%20baare%20mein%20poochna%20hai." target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a></div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-inner"><div><strong>OM MEDICAL STORE</strong><div>आपकी सेहत, हमारी प्राथमिकता</div></div><div>Rudrapur, Uttarakhand</div><div>© <span id="year"></span> OM MEDICAL STORE</div></div>
-    <div class="footer-inner"><p class="disclaimer">महत्वपूर्ण: यह वेबसाइट सामान्य जानकारी और संपर्क के लिए है, चिकित्सकीय सलाह का विकल्प नहीं। प्रिस्क्रिप्शन वाली दवाएँ लागू कानून और वैध प्रिस्क्रिप्शन के अनुसार ही उपलब्ध होंगी। वेबसाइट पर दिखाए गए उत्पादों की उपलब्धता की पुष्टि दुकान से करें।</p></div>
-  </footer>
-  <a class="float-wa" href="https://wa.me/967575799812?text=Namaste%2C%20OM%20MEDICAL%20STORE%20se%20sampark%20karna%20hai." target="_blank" rel="noopener">✆ WhatsApp</a>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+search.addEventListener("input", renderProducts);
+category.addEventListener("change", renderProducts);
+renderProducts();
+</script>
 </body>
 </html>
+
